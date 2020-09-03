@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lists of Github users</title>
+    <style media="screen">
+      *{
+          box-sizing: border-box;
+      }
+      header{
+        text-align: center;
+      }
+      footer{
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      h1{
+          font-size: 20px;
+          word-spacing: 10px;
+          line-height: 20px;
+      }
+      h2{
+        line-height: 5px;
+      }
+      hr {
+        margin-bottom: 3rem;
+        margin-top: 3rem;
+      }
+
+      button{
+        font-size: 1.5vw;
+        background-color:activecaption;
+        cursor:pointer;
+        width:20vw;
+        border:3px solid blue;
+        border-radius: 12px;
+        margin-top: 4px;
+      }
+      body{
+          margin:5%;
+          width:80%;
+          font-family:sans-serif;
+          background-color: #fff;
+      #showInfo{
+        content-align:center;
+      }
+      li{
+        list-style:none;
+      }
+      #showme{
+        margin:10%;
+      }
+      #individual{
+        margin:2%;
+        background-color: #ffffe6;
+        overflow:auto;
+      }
+      #sub-individual{
+        display: inline-block;
+        background-color: #fff;
+        padding-right:10%;
+        margin-bottom:5%;
+        margin-top:5%;
+        margin-left:5%;
+        margin-right:5%;
+      }
+      img{
+        margin-bottom:5%;
+        margin-top:5%;
+        margin-left:5%;
+        margin-bottom:-12px;
+        padding:3px;
+      }
+      .class-one{
+          padding: 14px 25px;
+          text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Lists of Github users</h1>
+       <h2><button id="showInfo">Load Github Users</button>
+         <button onclick="document.location='https://farhanarinky.github.io/Portfolio/'">Back to Portfolio</button></h2>
+    </header><hr>
+
+    <div id="showme"></div>
+    <script>
+        document.getElementById("showInfo").addEventListener('click', onProcess);
+
+        function onProcess(){
+            var req = new XMLHttpRequest();
+            req.open('GET', 'https://api.github.com/users', true);
+            req.onload = function() {
+                if(req.status==200){
+                  var people = JSON.parse(req.responseText)
+                  var display= '';
+                  for(var i in people){
+                   display +=
+                   '<div id="individual">' +
+                   '<img src="'+people[i].avatar_url+'" width="20%">'+
+                   '<div id="sub-individual"><ul>' +
+                   '<p><li>ID: <span id="class-one">'+people[i].id+'<span></li></p>' +
+                   '<p><li>Login: <span id="class-one">'+people[i].login+'<span></li></p>' +
+                   '<p><li>Repos: <a href="'+people[i].repos_url +'" target="_blank">'+people[i].repos_url +'</a></li></p>'+
+                   '<p><li>URL: <a href="'+people[i].url+'" target="_blank">'+people[i].url+'</a></li></p>' +
+                   '<p><li>Gits: <a href="'+people[i].gists_url+'" target="_blank">'+people[i].gists_url+'</a></li></p>' +
+                   '</ul></div>' +
+                   '</div>';
+                   document.getElementById('showme').innerHTML = display;
+                   }
+
+                }
+
+            }
+            req.send();
+        }
+    </script>
+    <footer>
+   <hr>
+   <code>Copyright (c) 2020 Fatema Farhana Rinky</code>
+ </footer>
+  </body>
+</html>
